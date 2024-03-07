@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01-Hello React案例</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      // react 18 之前
+      // ReactDOM.render(<h1>ReactDOM</h1>, document.querySelector('#root'));
+
+      // 数据
+      let message = 'Hello!';
+      function btnClick() {
+        console.log('按钮被点击了');
+        if (message === 'Hello React!') {
+          message = 'Hello!';
+        } else {
+          message = 'Hello React!';
+        }
+        // 默认改变数据，要重新渲染
+        render();
+      }
+      // 创建根组件
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+      render();
+
+      function render() {
+        root.render(
+          <div>
+            <h1>{message}</h1>
+            <button onClick={btnClick}>修改文本</button>
+          </div>,
+        );
+      }
+    </script>
+  </body>
+</html>

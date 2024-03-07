@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+
+      class App extends React.Component {
+        constructor() {
+          super();
+
+          this.state = {
+            message: '计数器',
+            count: 0,
+          };
+
+          this.add = this.add.bind(this);
+          this.del = this.del.bind(this);
+        }
+
+        add() {
+          console.log('add');
+          this.setState({
+            count: this.state.count + 1,
+          });
+        }
+
+        del() {
+          console.log('del');
+          this.setState({
+            count: this.state.count - 1,
+          });
+        }
+
+        render() {
+          const { message, count } = this.state;
+          return (
+            <div>
+              <h1>{message}</h1>
+              <h2>count: {count}</h2>
+              <button onClick={this.add}>+1</button>
+              <button onClick={this.del}>-1</button>
+            </div>
+          );
+        }
+      }
+
+      root.render(<App />);
+    </script>
+  </body>
+</html>

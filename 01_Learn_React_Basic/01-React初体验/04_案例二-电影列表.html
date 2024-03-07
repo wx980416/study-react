@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            movesList: [
+              '肖申克的救赎',
+              '霸王别姬',
+              '阿甘正传',
+              '这个杀手不太冷',
+              '泰坦尼克号',
+            ],
+          };
+        }
+
+        render() {
+          return (
+            <div>
+              <h1>电影列表：</h1>
+              <ul>
+                {this.state.movesList.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      root.render(<App />);
+    </script>
+  </body>
+</html>
