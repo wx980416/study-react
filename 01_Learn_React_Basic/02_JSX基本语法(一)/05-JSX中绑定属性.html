@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            message: 'Hello World',
+            title: '王鑫',
+            imgURL:
+              'https://ts1.cn.mm.bing.net/th/id/R-C.95bc299c3f1f0e69b9eb1d0772b14a98?rik=W5QLhXiERW4nLQ&riu=http%3a%2f%2f20178405.s21i.faiusr.com%2f2%2fABUIABACGAAgoeLO-wUo4I3o2gEw8Qs4uAg.jpg&ehk=N7Bxe9nqM08w4evC2kK6yyC%2bxIWTjdd6HgXsQYPbMj0%3d&risl=&pid=ImgRaw&r=0',
+            href: 'https://www.baidu.com',
+            objStyle: {
+              color: 'red',
+              fontSize: '50px',
+            },
+            isActive: true,
+          };
+        }
+
+        render() {
+          const { message, title, imgURL, href, objStyle, isActive } =
+            this.state;
+
+          const className = 'title';
+          const classNames = ['title'];
+          if (isActive) {
+            classNames.push('active 2222222222');
+          }
+          return (
+            <div>
+              <h2>{message}</h2>
+              <h2 title={title}>1111111111</h2>
+
+              <a href={href}>百度以下</a>
+              <img src={imgURL} alt="" />
+
+              <h2 className={className}>className</h2>
+              <h2 className={classNames.join(' ')}>classNames</h2>
+
+              <h2 style={objStyle}>objStyle</h2>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

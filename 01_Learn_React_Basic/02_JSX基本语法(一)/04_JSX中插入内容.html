@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            message: 'Hello World',
+            number: 100,
+            names: ['张三', '李四', '王五'],
+            aaa: undefined,
+            bbb: null,
+            ccc: true,
+            obj: {
+              name: 'wangxin',
+              age: 26,
+            },
+            a: 100,
+            b: 200,
+          };
+
+          this.getliEles = this.getliEles.bind(this);
+        }
+        getliEles() {
+          return this.state.names.map((item, index) => (
+            <li key={index}>{item}</li>
+          ));
+        }
+
+        render() {
+          const { message, number, names } = this.state;
+          const { aaa, bbb, ccc } = this.state;
+          const { obj } = this.state;
+          const { a, b } = this.state;
+
+          const liEles = names.map((item, index) => (
+            <li key={index}>{item}</li>
+          ));
+          return (
+            <div>
+              {/* Number/String/Array 直接显示 */}
+              <h2>{message}</h2>
+              <h2>{number}</h2>
+              <h2>{names}</h2>
+
+              {/* undefined/null/boolean 不显示 */}
+              <h2>{aaa}</h2>
+              <h2>{bbb}</h2>
+              <h2>{ccc}</h2>
+              <h2>{String(aaa)}</h2>
+              <h2>{String(bbb)}</h2>
+              <h2>{String(ccc)}</h2>
+
+              <h1>{obj.name}</h1>
+              <h1>{Object.keys(obj)[0]}</h1>
+
+              <h2>{1 + 1}</h2>
+              <h2>{a + b}</h2>
+
+              <h2>{obj.age > 18 ? '成年人' : '未成年人'}</h2>
+
+              <ul>{liEles}</ul>
+              <ul>
+                {names.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+              <ul>{this.getliEles()}</ul>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
