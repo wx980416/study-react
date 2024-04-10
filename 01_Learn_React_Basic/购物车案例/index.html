@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-购物车案例</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.4/babel.min.js"></script>
+    <style>
+      #root {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      thead {
+        background-color: #f2f2f2;
+      }
+
+      td,
+      th {
+        padding: 10px 16px;
+        border: 1px solid #aaa;
+      }
+      .search {
+        margin-bottom: 10px;
+      }
+      .count {
+        display: inline-block;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const data = [
+        {
+          id: 1,
+          name: '《算法导论》',
+          date: '2006-9',
+          price: 85.0,
+          count: 1,
+        },
+        {
+          id: 2,
+          name: '《UNIX编程艺术》',
+          date: '2006-2',
+          price: 59.0,
+          count: 1,
+        },
+        {
+          id: 3,
+          name: '《编程珠玑》',
+          date: '2008-10',
+          price: 39.0,
+          count: 1,
+        },
+        {
+          id: 4,
+          name: '《代码大全》',
+          date: '2006-3',
+          price: 128.0,
+          count: 1,
+        },
+      ];
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            tableHead: [
+              '编号',
+              '书籍名称',
+              '出版日期',
+              '价格',
+              '购买数量',
+              '操作',
+            ],
+            booksList: data,
+            searchName: '',
+          };
+        }
+
+        delBook(index) {
+          const booksList = [...this.state.booksList];
+          booksList.splice(index, 1);
+          this.setState({
+            booksList,
+          });
+        }
+        changeBookCount(index, step) {
+          const booksList = [...this.state.booksList];
+          booksList[index].count += step;
+          this.setState({
+            booksList,
+          });
+        }
+        getTotalPrice() {
+          const totalPrice = this.state.booksList.reduce((pre, item) => {
+            return pre + item.price * item.count;
+          }, 0);
+          return totalPrice;
+        }
+
+        searchBook(name) {
+          if (name === '') {
+            alert('请输入书籍名称');
+            return;
+          }
+
+          const booksList = [...this.state.booksList];
+          const searchList = booksList.filter((item) => {
+            return item.name.includes(name);
+          });
+          this.setState({
+            booksList: searchList,
+          });
+        }
+        clearSearch() {
+          this.setState({
+            searchName: '',
+            booksList: data,
+          });
+        }
+
+        addBook() {
+          const name = prompt('请输入新增的书籍名字');
+          const book = {
+            id: this.state.booksList.length + 1,
+            name: name,
+            date: new Date().toLocaleDateString(),
+            price: Math.floor(Math.random() * 100),
+            count: 1,
+          };
+
+          data.push(book);
+          this.setState({
+            booksList: data,
+          });
+        }
+
+        render() {
+          const { tableHead, booksList, searchName } = this.state;
+          return (
+            <div>
+              <div className="search">
+                <span>书籍搜索：</span>
+                <input
+                  type="text"
+                  placeholder="请输入书籍名称"
+                  value={searchName}
+                  onChange={(event) => {
+                    this.setState({
+                      searchName: event.target.value,
+                    });
+                  }}
+                  onKeyUp={(event) => {
+                    if (event.keyCode === 13) {
+                      this.searchBook(searchName);
+                    }
+                  }}
+                />
+                <button onClick={() => this.searchBook(searchName)}>
+                  搜索
+                </button>
+                <button onClick={() => this.clearSearch()}>清空</button>
+                <button onClick={() => this.addBook()}>新增书籍</button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    {tableHead.map((item, index) => {
+                      return <th key={index}>{item}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {booksList.map((item, index) => {
+                    return (
+                      <tr>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.date}</td>
+                        <td>{item.price}</td>
+                        <td>
+                          <button
+                            disabled={item.count <= 1}
+                            onClick={() => this.changeBookCount(index, -1)}
+                          >
+                            -
+                          </button>
+                          <span className="count">{item.count}</span>
+                          <button
+                            onClick={() => this.changeBookCount(index, 1)}
+                          >
+                            +
+                          </button>
+                        </td>
+                        <td>
+                          <button onClick={() => this.delBook(index)}>
+                            删除
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                {booksList.length === 0 && (
+                  <h2>{searchName ? '没有找到相关书籍~' : '没有书籍了~'}</h2>
+                )}
+              </table>
+              <h2>总价格：{this.getTotalPrice()}</h2>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
