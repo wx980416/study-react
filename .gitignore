@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+资料
+code
 *.local
 dist.zip
 components.d.ts
