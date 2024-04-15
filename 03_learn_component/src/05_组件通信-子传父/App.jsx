@@ -7,15 +7,28 @@ export class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      msg: 'props 传递的数据',
+      count: 0,
     };
   }
+
+  changeCount(num) {
+    this.setState({
+      count: this.state.count + num,
+    });
+  }
+
   render() {
-    const { msg } = this.state;
+    const { count } = this.state;
     return (
       <div className="App">
-        <Header msg={msg} />
-        <Main />
+        <h1>{count}</h1>
+        <Header />
+        <Main
+          changeCount={(num) => {
+            console.log('子组件传来的值');
+            this.changeCount(num);
+          }}
+        />
         <Footer />
       </div>
     );
