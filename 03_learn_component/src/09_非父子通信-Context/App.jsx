@@ -3,6 +3,7 @@ import Home from './Home';
 
 import ThemeContext from './context/theme-context';
 import UserContext from './context/user-context';
+import DataContext from './context/data-context.js';
 import Profile from './Profile';
 
 export class App extends Component {
@@ -29,7 +30,9 @@ export class App extends Component {
         {/* 第二步操作: 通过ThemeContext中Provider中value属性为后代提供数据 */}
         <UserContext.Provider value={{ nickname: 'kobe', age: 30 }}>
           <ThemeContext.Provider value={{ color: 'red', size: '30' }}>
-            <Home {...info} />
+            <DataContext.Provider value={{ data: 11111111111111 }}>
+              <Home {...info} />
+            </DataContext.Provider>
           </ThemeContext.Provider>
         </UserContext.Provider>
         <Profile />
